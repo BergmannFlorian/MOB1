@@ -10,16 +10,12 @@ import {apiUrl} from '../../app.json';
 function StockComponent() {
   const [data, setData] = useState(null);
   const userContainer = UserContainer.useContainer();
+  const stockContainer = StockContainer.useContainer();
+
   useEffect(() => {
-    axios
-      .get('/api/products/1', {
-        headers: {Authorization: 'Bearer ' + userContainer.tokken},
-      })
-      .then(response => {
-        setData(response.data.data);
-      })
-      .catch(error => console.log(error));
-  }, [userContainer]);
+    stockContainer.refreshStock(userContainer.tokken)
+    setData(stockContainer.getProduct());
+  }, [userContainer, stockContainer]);
   return (
     <View>
       {data ? (
@@ -31,26 +27,26 @@ function StockComponent() {
             placeholderTextColor="rgb(180, 180, 180)"
             keyboardType="numeric"
             value={data.stock.toString()}
-            onChangeText={number => console.log(number)}
+            onChangeText={number => stockContainer.changeQuantity(number)}
           />
           <Text style={{marginBottom: 10}}>{` ${data.unit}`}</Text>
           <View style={styles.buttonOk}>
             <Button
-              onPress={() => Alert.alert("ok")}
+              onPress={() => stockContainer.validateProduct()}
               title="ok"
               color="darkred"
             />
           </View>
           <View style={styles.buttonPrev}>
             <Button
-              onPress={() => Alert.alert("previous")}
+              onPress={() => stockContainer.previousProduct()}
               title="<"
               color="darkred"
             />
           </View>
           <View style={styles.buttonNext}>
             <Button
-              onPress={() => Alert.alert("next")}
+              onPress={() => stockContainer.nextProduct()}
               title=">"
               color="darkred"
             />
@@ -111,8 +107,8 @@ const styles = StyleSheet.create({
   buttonOk:{
     position:"absolute",
     width:40,
-    top:"35%",
-    left: "88%",
+    top:"20%",
+    left: "10%",
   },
   buttonPrev:{
     position:"absolute",
