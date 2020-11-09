@@ -13,6 +13,7 @@ function StockComponent() {
   const stockContainer = StockContainer.useContainer();
 
   useEffect(() => {
+    //work but with lag
     stockContainer.refreshStock(userContainer.tokken)
     setData(stockContainer.getProduct());
   }, [userContainer, stockContainer]);
