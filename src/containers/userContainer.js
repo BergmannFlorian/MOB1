@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export function useUserContainer() {
   let [tokken, setTokken] = useState('');
+  let [status, setStatus] = useState(0);
 
   async function refreshTokken() {
     let value = await AsyncStorage.getItem('token');
@@ -19,9 +20,10 @@ export function useUserContainer() {
       .get('/api/me', {
         headers: {Authorization: 'Bearer ' + values.token},
       })
-      .then(async () => {
+      .then(async (response) => {
         try {
           await AsyncStorage.setItem('token', values.token);
+          setStatus(response.data.data.user_type);
           this.refreshTokken();
         } catch (e) {}
       })
