@@ -9,6 +9,7 @@ import RegisterScreen from './components/RegisterScreen.js';
 import ProductScreen from './screen/ProductScreen.js';
 import BasketScreen from './screen/BasketScreen.js';
 import ProfileScreen from './screen/ProfileScreen.js';
+import StockScreen from './screen/StockScreen.js';
 
 import {UserContainer} from './containers/index.js';
 
@@ -58,6 +59,21 @@ export default function Router() {
               headerTintColor: '#fff',
             }}
           />
+          {userContainer.status == 1 ? (
+            <Tab.Screen
+              name="Stock"
+              component={StockScreen}
+              options={{
+                tabBarIcon: () => (
+                  <Ionicons name="sliders-h" color="#0f20d9" size={24} />
+                ),
+                headerStyle: {
+                  backgroundColor: '#0f20d9',
+                },
+                headerTintColor: '#fff',
+              }}
+            />
+          ) : null}
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>

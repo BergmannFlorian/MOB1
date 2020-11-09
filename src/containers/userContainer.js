@@ -33,5 +33,5 @@ export function useUserContainer() {
   function deleteToken(){
     AsyncStorage.setItem('token','');
   }
-  return {tokken, setTokken, refreshTokken, login,deleteToken};
+  return {tokken, status, setTokken, refreshTokken, login,deleteToken};
 }
