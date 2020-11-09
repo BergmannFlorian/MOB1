@@ -13,41 +13,45 @@ export function useStockContainer(){
                 headers: {Authorization: 'Bearer ' + tokken},
             })
             .then(response => {
-                setUnvalidStock(response.data.data)
-                setEmpty(false)
+                setUnvalidStock(response.data.data);
+                setEmpty(false);
             })
             .catch(error => console.log(error));
         }
     }
     function getStock(){
-        return validStock
+        return validStock;
     }
     function getProduct(){
-        return unvalidStock[index]
+        return unvalidStock[index];
     }
     function nextProduct(){
-        var tmpIndex = index + 1
-        if(tmpIndex > unvalidStock.length-1)tmpIndex = 0
-        setIndex(tmpIndex)
+        var tmpIndex = index + 1;
+        if(tmpIndex > unvalidStock.length-1)tmpIndex = 0;
+        setIndex(tmpIndex);
     }
     function previousProduct(){
-        var tmpIndex = index - 1
-        if(tmpIndex < 0)tmpIndex = unvalidStock.length-1
-        setIndex(tmpIndex)
+        var tmpIndex = index - 1;
+        if(tmpIndex < 0)tmpIndex = unvalidStock.length-1;
+        setIndex(tmpIndex);
     }
     function changeQuantity(quantity){
-        console.log(quantity)
-        var tmpUnvalidStock = unvalidStock
-        tmpUnvalidStock[index].stock = quantity
+        var tmpUnvalidStock = unvalidStock;
+        tmpUnvalidStock[index].stock = quantity;
+        console.log(tmpUnvalidStock[index].stock);
+        setUnvalidStock(tmpUnvalidStock);
     }
     function validateProduct(){
-        var tmpValidStock = validStock
-        var tmpUnvalidStock = unvalidStock
-        tmpValidStock.push(unvalidStock[index])
-        tmpUnvalidStock.splice(index, 1)
-        setValidStock(tmpValidStock)
-        setUnvalidStock(tmpUnvalidStock)
-        nextProduct()
+        var tmpValidStock = validStock;
+        var tmpUnvalidStock = unvalidStock;
+        tmpValidStock.push(unvalidStock[index]);
+        tmpUnvalidStock.splice(index, 1);
+        setValidStock(tmpValidStock);
+        setUnvalidStock(tmpUnvalidStock);
+        if(tmpUnvalidStock.length <= 0){
+            
+        }
+        nextProduct();
     }
     function validateStock(){
     }
